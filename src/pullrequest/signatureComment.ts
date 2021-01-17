@@ -34,6 +34,7 @@ export default async function signatureWithPRComment(committerMap: CommitterMap,
             filteredListOfPRComments.push(comment)
         }
     })
+    core.warning("List of filtered PR comments: ")
     core.warning(filteredListOfPRComments.toString())
     for (var i = 0; i < filteredListOfPRComments.length; i++) {
         delete filteredListOfPRComments[i].body
