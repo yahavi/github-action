@@ -34,6 +34,7 @@ export default async function signatureWithPRComment(committerMap: CommitterMap,
             filteredListOfPRComments.push(comment)
         }
     })
+    core.warning(filteredListOfPRComments.toString())
     for (var i = 0; i < filteredListOfPRComments.length; i++) {
         delete filteredListOfPRComments[i].body
     }
@@ -60,6 +61,8 @@ export default async function signatureWithPRComment(committerMap: CommitterMap,
 }
 
 function isCommentSignedByUser(comment:string, commentAuthor: string):boolean{
+    core.warning(`Comment: ` + comment)
+
     if (commentAuthor === 'github-actions[bot]') {
         return false
     }
@@ -71,6 +74,7 @@ function isCommentSignedByUser(comment:string, commentAuthor: string):boolean{
         case 'true':
             return comment.match(/^.*i \s*have \s*read \s*the \s*dco \s*document \s*and \s*i \s*hereby \s*sign \s*the \s*dco.*$/) !== null
         case 'false':
+            core.warning(`Matching against CLA`)
             return comment.match(/^.*i \s*have \s*read \s*the \s*cla \s*document \s*and \s*i \s*hereby \s*sign \s*the \s*cla.*$/) !== null
         default:
             return false
