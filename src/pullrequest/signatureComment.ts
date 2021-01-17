@@ -64,14 +64,14 @@ function isCommentSignedByUser(comment:string, commentAuthor: string):boolean{
         return false
     }
     if(getCustomPrSignComment() !== ""){
-        return getCustomPrSignComment().toLowerCase() === comment
+        return comment.match(getCustomPrSignComment().toLowerCase()) !== null
     }
     // using a `string` true or false purposely as github action input cannot have a boolean value
     switch (getUseDcoFlag()) {
         case 'true':
-            return comment.match(/^.*i \s*have \s*read \s*the \s*dco \s*document \s*and \s*i \s*hereby \s*sign \s*the \s*dco.*$/) !== null
+            return comment.match(/^[\s\S]*i \s*have \s*read \s*the \s*dco \s*document \s*and \s*i \s*hereby \s*sign \s*the \s*dco[\s\S]*$/) !== null
         case 'false':
-            return comment.match(/^.*i \s*have \s*read \s*the \s*cla \s*document \s*and \s*i \s*hereby \s*sign \s*the \s*cla.*$/) !== null
+            return comment.match(/^[\s\S]*i \s*have \s*read \s*the \s*cla \s*document \s*and \s*i \s*hereby \s*sign \s*the \s*cla[\s\S]*$/) !== null
         default:
             return false
         }
